@@ -76,12 +76,6 @@ const songs = [
   }
 ];
 
-const genreConfig = {
-  pop: { border: 'border-l-blue-500', mark: 'bg-blue-500', dot: 'bg-blue-500', textHover: 'hover:text-blue-600' },
-  hipdut: { border: 'border-l-pink-500', mark: 'bg-pink-500', dot: 'bg-pink-500', textHover: 'hover:text-pink-500' },
-  indie: { border: 'border-l-green-500', mark: 'bg-green-500', dot: 'bg-green-500', textHover: 'hover:text-green-500' }
-};
-
 function renderCarousel() {
   const container = document.getElementById('hero-carousel');
   const heroSongs = songs.slice(0, 3);
@@ -91,14 +85,13 @@ function renderCarousel() {
   inner.className = 'flex w-full h-full transition-transform duration-700 ease-in-out';
 
   heroSongs.forEach((song, i) => {
-    const gc = genreConfig[song.genre];
     const figure = document.createElement('figure');
     figure.className = 'w-full h-full flex-shrink-0 relative';
     figure.innerHTML = `
       <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent z-10"></div>
       <img src="${song.heroImage}" alt="${song.title}" class="w-full h-full object-cover" />
       <div class="absolute bottom-10 left-8 md:left-16 z-20 max-w-xl">
-        <span class="inline-block ${gc.dot} text-white text-xs font-bold px-3 py-1 rounded-full mb-3">${song.badge}</span>
+        <span class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full mb-3">${song.badge}</span>
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-1">${song.title}</h2>
         <p class="text-lg text-gray-200 mb-1">${song.artist}</p>
         <p class="text-gray-400 text-sm">${song.genreLabel} &middot; ${song.release}</p>
@@ -125,30 +118,30 @@ function renderArticles() {
   const container = document.getElementById('album-list');
 
   songs.forEach((song) => {
-    const gc = genreConfig[song.genre];
     const article = document.createElement('article');
     article.dataset.genre = song.genre;
-    article.className = `album-card bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 ease-in-out ${gc.border} border-l-4 overflow-hidden`;
+    article.className = 'album-card bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group';
 
     article.innerHTML = `
-      <figure class="w-full">
-        <img src="${song.image}" alt="${song.title}" class="w-full h-52 object-cover" />
-        <figcaption class="text-xs text-gray-400 px-4 pt-2 pb-1">
-          <span class="font-semibold text-gray-700">${song.title}</span> &mdash; ${song.artist}
-        </figcaption>
-      </figure>
-      <div class="px-4 pb-4">
-        <header class="mb-2">
-          <h3 class="text-lg font-bold text-gray-900 leading-tight">${song.title}</h3>
-          <p class="text-sm text-gray-500">${song.artist}</p>
-        </header>
-        <div class="flex items-center gap-2 mb-2">
-          <mark class="${gc.mark} text-white text-xs font-bold px-2.5 py-0.5 rounded-full">${song.rating}/10</mark>
+      <div class="relative overflow-hidden">
+        <img src="${song.image}" alt="${song.title}" class="w-full aspect-square object-cover" />
+        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+          <button class="w-12 h-12 rounded-full bg-green-500 text-white shadow-xl flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="p-4">
+        <h3 class="font-bold text-gray-900 truncate">${song.title}</h3>
+        <p class="text-sm text-gray-500 truncate mt-0.5">${song.artist}</p>
+        <div class="flex items-center gap-2 mt-2">
+          <span class="text-xs text-gray-400">${song.rating}/10</span>
+          <span class="text-xs text-gray-300">·</span>
           <time datetime="${song.releaseISO}" class="text-xs text-gray-400">${song.release}</time>
         </div>
-        <p class="text-sm text-gray-600 leading-relaxed mb-3">${song.description}</p>
-        <aside class="bg-gray-50 rounded-lg p-3 border border-gray-100 mb-3">
-          <h4 class="font-semibold text-gray-700 text-xs uppercase tracking-wide mb-1.5">&#9835; Dengarkan Juga</h4>
+        <p class="text-sm text-gray-600 leading-relaxed mt-2 line-clamp-2">${song.description}</p>
+        <aside class="bg-gray-50 rounded-lg p-3 mt-3 border border-gray-100">
+          <h4 class="font-semibold text-gray-700 text-xs uppercase tracking-wide mb-1">&#9835; Dengarkan Juga</h4>
           <ul class="list-disc list-inside text-xs text-gray-500 space-y-0.5">
             ${song.tracks.map(t => `<li>${t}</li>`).join('')}
           </ul>
@@ -228,11 +221,11 @@ function setupFilter() {
 
   function setActiveLink(active) {
     navLinks.forEach(link => {
-      link.classList.remove('text-gray-900', 'font-semibold');
-      link.classList.add('text-gray-500');
+      link.classList.remove('bg-gray-900', 'text-white');
+      link.classList.add('bg-gray-100', 'text-gray-700');
     });
-    active.classList.remove('text-gray-500');
-    active.classList.add('text-gray-900', 'font-semibold');
+    active.classList.remove('bg-gray-100', 'text-gray-700');
+    active.classList.add('bg-gray-900', 'text-white');
   }
 
   navLinks.forEach(link => {
@@ -254,8 +247,8 @@ function setupFilter() {
 
   const defaultActive = document.querySelector('[data-filter="all"]');
   if (defaultActive) {
-    defaultActive.classList.remove('text-gray-500');
-    defaultActive.classList.add('text-gray-900', 'font-semibold');
+    defaultActive.classList.remove('bg-gray-100', 'text-gray-700');
+    defaultActive.classList.add('bg-gray-900', 'text-white');
   }
 }
 
