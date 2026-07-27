@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AudioReview - Analisis Musik Modern</title>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      /* Custom theme jika diperlukan */
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+  <header class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+    <nav class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-black text-gray-900 tracking-tight">AudioReview</h1>
+      <ul class="flex space-x-6 text-sm font-medium">
+        <li><a href="#" data-filter="all" class="nav-link text-gray-900 hover:text-blue-600 transition">Semua</a></li>
+        <li><a href="#" data-filter="pop" class="nav-link text-gray-500 hover:text-blue-600 transition">Pop</a></li>
+        <li><a href="#" data-filter="hipdut" class="nav-link text-gray-500 hover:text-pink-500 transition">Hipdut</a></li>
+        <li><a href="#" data-filter="indie" class="nav-link text-gray-500 hover:text-green-500 transition">Indie</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="pt-20">
+    <section id="hero-carousel" class="relative w-full h-[50vh] bg-gra  -900 overflow-hidden">
+      <!-- Injeksi Dinamis Slide Hero oleh JS -->
+    </section>
+
+    <section id="review-board" class="max-w-7xl mx-auto px-4 py-12">
+      <header class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-900">Ulasan Terbaru</h2>
+      </header>
+      <div id="album-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Render Engine JS akan bekerja di sini -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 py-8 text-center text-gray-500 text-sm mt-12">
+    <p>&copy; 2026 AudioReview Platform. Tugas Praktikum 2.</p>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
